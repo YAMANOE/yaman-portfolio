@@ -1,0 +1,188 @@
+{
+  "projects": [
+    {
+      "slug": "traffic",
+      "year": 2026,
+      "title": "Amman traffic intelligence",
+      "subtitle": "City-scale traffic intelligence platform",
+      "summary": "An import that failed every insert while exiting zero. I gated it on a ratio invariant.",
+      "featured": true,
+      "sourcePublic": false,
+      "cover": "assets/covers/traffic.svg",
+      "coverAlt": "TODO(yaman): what the cover shows, not 'project image'.",
+      "stack": [
+        "Python",
+        "PostgreSQL",
+        "FastAPI",
+        "RF-DETR"
+      ],
+      "headline": {
+        "value": "135k",
+        "label": "Verified graph edges"
+      },
+      "meta": [
+        {
+          "label": "Role",
+          "value": "Backend and data layer"
+        },
+        {
+          "label": "Context",
+          "value": "Public-sector pilot, team of 5, largest contributor"
+        }
+      ],
+      "links": {
+        "study": "projects/traffic.html",
+        "repo": "",
+        "demo": "",
+        "report": ""
+      }
+    },
+    {
+      "slug": "voc360",
+      "year": 2026,
+      "title": "VoC 360",
+      "subtitle": "National citizen-feedback platform",
+      "summary": "Trend claims were taken off the model and moved into a deterministic layer.",
+      "featured": true,
+      "sourcePublic": false,
+      "cover": "assets/covers/voc360.svg",
+      "coverAlt": "TODO(yaman): what the cover shows, not 'project image'.",
+      "stack": [
+        "Python",
+        "PostgreSQL",
+        "FastAPI",
+        "LangGraph"
+      ],
+      "headline": {
+        "value": "694",
+        "label": "Tests"
+      },
+      "meta": [
+        {
+          "label": "Role",
+          "value": "Analysis service"
+        },
+        {
+          "label": "Context",
+          "value": "1 of 24 engineers, sole owner of the subsystem"
+        }
+      ],
+      "links": {
+        "study": "projects/voc360.html",
+        "repo": "",
+        "demo": "",
+        "report": ""
+      }
+    },
+    {
+      "slug": "inboxpilot",
+      "year": 2026,
+      "title": "InboxPilot",
+      "subtitle": "Arabic AI support desk",
+      "summary": "A multi-channel support desk that drafts replies in Jordanian Arabic. Sandbox-first, so it runs before any Meta or Twilio approval lands.",
+      "featured": true,
+      "sourcePublic": false,
+      "cover": "assets/covers/inboxpilot.svg",
+      "coverAlt": "TODO(yaman): what the cover shows, not 'project image'.",
+      "stack": [
+        "TypeScript",
+        "Next.js",
+        "Supabase",
+        "Tailwind CSS"
+      ],
+      "headline": {
+        "value": "TODO(yaman)",
+        "label": "TODO(yaman): the one number that matters"
+      },
+      "meta": [
+        {
+          "label": "Role",
+          "value": "End-to-end solo build"
+        },
+        {
+          "label": "Context",
+          "value": "TODO(yaman): where this ran and for whom"
+        }
+      ],
+      "links": {
+        "study": "projects/inboxpilot.html",
+        "repo": "",
+        "demo": "",
+        "report": ""
+      }
+    },
+    {
+      "slug": "agribot",
+      "year": 2025,
+      "title": "AgriBot AI",
+      "subtitle": "Crop and fertiliser recommendation on a Raspberry Pi",
+      "summary": "Runs on a Raspberry Pi with live sensor input. Code and training pipeline are public.",
+      "featured": true,
+      "sourcePublic": true,
+      "cover": "assets/covers/agribot.svg",
+      "coverAlt": "TODO(yaman): what the cover shows, not 'project image'.",
+      "stack": [
+        "Python",
+        "XGBoost",
+        "Random forest",
+        "Raspberry Pi"
+      ],
+      "headline": {
+        "value": "99%",
+        "label": "XGBoost accuracy on held-out data"
+      },
+      "meta": [
+        {
+          "label": "Role",
+          "value": "Crop and fertiliser recommendation"
+        },
+        {
+          "label": "Context",
+          "value": "Graduation project, Yarmouk University"
+        }
+      ],
+      "links": {
+        "study": "projects/agribot.html",
+        "repo": "https://github.com/YAMANOE",
+        "demo": "",
+        "report": ""
+      }
+    },
+    {
+      "slug": "crisis-support",
+      "year": 2026,
+      "title": "Crisis decision support",
+      "subtitle": "Crisis decision-support platform",
+      "summary": "Under saturation the server refuses work instead of queueing it, and the caller drops to a deterministic fallback.",
+      "featured": false,
+      "sourcePublic": false,
+      "cover": "assets/covers/crisis-support.svg",
+      "coverAlt": "TODO(yaman): what the cover shows, not 'project image'.",
+      "stack": [
+        "Python",
+        "PostgreSQL",
+        "FastAPI"
+      ],
+      "headline": {
+        "value": "438/1031",
+        "label": "Tests written"
+      },
+      "meta": [
+        {
+          "label": "Role",
+          "value": "Reasoning and data services"
+        },
+        {
+          "label": "Context",
+          "value": "Team of 5, sole owner of the subsystem"
+        }
+      ],
+      "links": {
+        "study": "",
+        "repo": "",
+        "demo": "",
+        "report": ""
+      }
+    }
+  ]
+}

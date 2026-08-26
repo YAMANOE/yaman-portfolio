@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About — Yaman Obaidat</title>
+<meta name="description" content="AI/ML Engineer in Amman, Jordan. BSc Data Science and Artificial Intelligence, Yarmouk University. Currently in the 9xAI Program at HTU.">
+<link rel="canonical" href="https://YAMANOE.github.io/yaman-portfolio/about.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yaman Obaidat">
+<meta property="og:url" content="https://YAMANOE.github.io/yaman-portfolio/about.html">
+<meta property="og:title" content="About — Yaman Obaidat">
+<meta property="og:description" content="AI/ML Engineer in Amman, Jordan. BSc Data Science and Artificial Intelligence, Yarmouk University. Currently in the 9xAI Program at HTU.">
+<!-- Social crawlers cannot resolve relative URLs, so these two are absolute.
+     They are the only absolute paths in the repo. -->
+<meta property="og:image" content="https://YAMANOE.github.io/yaman-portfolio/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Yaman Obaidat — AI/ML Engineer. Civic tech, computer vision, multi-agent systems.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About — Yaman Obaidat">
+<meta name="twitter:description" content="AI/ML Engineer in Amman, Jordan. BSc Data Science and Artificial Intelligence, Yarmouk University. Currently in the 9xAI Program at HTU.">
+<meta name="twitter:image" content="https://YAMANOE.github.io/yaman-portfolio/assets/og-image.png">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans+Arabic:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/about.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Yaman Khaled Obaidat",
+  "jobTitle": "AI/ML Engineer",
+  "url": "https://YAMANOE.github.io/yaman-portfolio/",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Amman",
+    "addressCountry": "JO"
+  },
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "Yarmouk University"
+  },
+  "knowsLanguage": [
+    {
+      "@type": "Language",
+      "name": "Arabic"
+    },
+    {
+      "@type": "Language",
+      "name": "English"
+    }
+  ],
+  "knowsAbout": [
+    "XGBoost",
+    "Random forest",
+    "RF-DETR",
+    "Object detection and tracking",
+    "Model evaluation",
+    "PostgreSQL",
+    "pgvector",
+    "Schema design and migrations",
+    "Routing graphs",
+    "Data invariants and verification",
+    "Python",
+    "FastAPI",
+    "LangGraph",
+    "TypeScript",
+    "Next.js",
+    "Supabase",
+    "Docker",
+    "Redis",
+    "Git and gated CI",
+    "Raspberry Pi",
+    "Linux"
+  ],
+  "sameAs": [
+    "https://github.com/YAMANOE"
+  ]
+}
+</script>
+</head>
+<body class="sheet-page">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="shell topbar__inner">
+    <a class="mark" href="index.html">Yaman Obaidat</a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="about.html" aria-current="page">About</a>
+    </nav>
+    <span class="pill">Reviewer</span>
+  </div>
+</header>
+
+<main id="main">
+
+  <div class="error error--sheet" id="error" hidden>
+    <p><strong>The profile data could not load.</strong></p>
+    <p>This page reads <code class="mono">data/profile.json</code> over the network, which does
+       not work from a <code class="mono">file://</code> address. Serve the folder over http:</p>
+    <p><code class="mono">python3 -m http.server 8000</code></p>
+    <p class="error__detail"><code></code></p>
+  </div>
+
+  <!-- The sheet. Eleven parcels abutting with zero gutters on shared hairlines,
+       so every card edge lands on an arterial of the paper grid. DOM order is
+       the reading order AND the visual order at every breakpoint, so the CSS
+       counters number the cards 01..11 the way the eye travels. -->
+  <div class="sheet" id="sheet">
+
+    <section class="parcel parcel--identity" aria-labelledby="name">
+      <p class="eyebrow" id="location"></p>
+      <h1 id="name"></h1>
+      <p class="identity__role" id="role"></p>
+    </section>
+
+    <figure class="parcel parcel--portrait" id="portrait-card">
+      <img id="photo" alt="" width="480" height="480">
+    </figure>
+
+    <section class="parcel parcel--now" aria-labelledby="now-heading">
+      <h2 class="parcel__label" id="now-heading"></h2>
+      <p class="now__line"><span class="signal" aria-hidden="true"></span><span id="now-body"></span></p>
+    </section>
+
+    <section class="parcel parcel--bio" aria-labelledby="bio-heading">
+      <h2 class="parcel__label" id="bio-heading">Bio</h2>
+      <div id="bio"></div>
+    </section>
+
+    <section class="parcel parcel--education" aria-labelledby="education-heading">
+      <h2 class="parcel__label" id="education-heading">Education</h2>
+      <h3 id="degree"></h3>
+      <p class="mono academic__where" id="institution"></p>
+      <div class="group" id="research-group">
+        <h3 class="sub">Research interests</h3>
+        <p id="research"></p>
+      </div>
+      <div class="group" id="report-group">
+        <h3 class="sub">Formal report</h3>
+        <p id="report-title"></p>
+        <p class="muted" id="report-note"></p>
+        <p><a id="report-link" href="#">Download the report</a></p>
+      </div>
+    </section>
+
+    <section class="parcel parcel--project" aria-labelledby="project-heading">
+      <h2 class="parcel__label" id="project-heading">Graduation project</h2>
+      <h3 id="gradproject-title"></h3>
+      <p id="gradproject-summary"></p>
+      <p><a id="gradproject-link" href="#">Read the case study</a></p>
+    </section>
+
+    <section class="parcel parcel--certs" aria-labelledby="certs-heading">
+      <h2 class="parcel__label" id="certs-heading">Certifications</h2>
+      <ul class="certs" id="certifications"></ul>
+    </section>
+
+    <!-- The four skill parcels are static shells that about.js fills. They must
+         exist at first paint: a JS-created element cannot be reserved by CSS,
+         and four cards appearing at once shoved the rest of the sheet down.
+         phase-5-about.md fixes this at exactly four groups. -->
+    <div class="skills-wrap" id="skills">
+      <section class="parcel parcel--skill" aria-labelledby="skill-0">
+        <h2 class="parcel__label" id="skill-0"></h2><ul></ul>
+      </section>
+      <section class="parcel parcel--skill" aria-labelledby="skill-1">
+        <h2 class="parcel__label" id="skill-1"></h2><ul></ul>
+      </section>
+      <section class="parcel parcel--skill" aria-labelledby="skill-2">
+        <h2 class="parcel__label" id="skill-2"></h2><ul></ul>
+      </section>
+      <section class="parcel parcel--skill" aria-labelledby="skill-3">
+        <h2 class="parcel__label" id="skill-3"></h2><ul></ul>
+      </section>
+    </div>
+
+    <section class="parcel parcel--languages" aria-labelledby="languages-heading">
+      <h2 class="parcel__label" id="languages-heading">Languages</h2>
+      <dl class="pairs" id="languages"></dl>
+    </section>
+
+    <section class="parcel parcel--contact" aria-labelledby="contact-heading">
+      <h2 class="parcel__label" id="contact-heading">Contact</h2>
+      <dl class="pairs" id="contact"></dl>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="shell site-footer__inner">
+    <span>AI/ML Engineer — civic tech, computer vision, multi-agent systems.</span>
+    <span>Amman, Jordan</span>
+  </div>
+</footer>
+
+<script type="module" src="assets/about.js"></script>
+</body>
+</html>

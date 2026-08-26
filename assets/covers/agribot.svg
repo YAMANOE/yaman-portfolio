@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" role="img" aria-label="AgriBot AI — Crop and fertiliser recommendation on a Raspberry Pi">
+<style>
+  .bg  { fill: #F7F6F2; }
+  .g   { stroke: #E4E2DB; stroke-width: 1; fill: none; }
+  .eye { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 17px; fill: #565C66; letter-spacing: .04em; }
+  .ttl { font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; font-size: 40px; font-weight: 600; fill: #14161A; }
+  .val { font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; font-size: 76px; font-weight: 700; fill: #0B6B53; }
+  .todo{ font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 76px; fill: #565C66; }
+  .lab { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 16px; fill: #565C66; }
+  .rule{ stroke: #D2CFC7; stroke-width: 1; }
+  .sig { fill: #0B6B53; }
+</style>
+<rect class="bg" width="600" height="600"/>
+<path d="M0,0 V600" class="g"/><path d="M0,0 H600" class="g"/><path d="M40,0 V600" class="g"/><path d="M0,40 H600" class="g"/><path d="M80,0 V600" class="g"/><path d="M0,80 H600" class="g"/><path d="M120,0 V600" class="g"/><path d="M0,120 H600" class="g"/><path d="M160,0 V600" class="g"/><path d="M0,160 H600" class="g"/><path d="M200,0 V600" class="g"/><path d="M0,200 H600" class="g"/><path d="M240,0 V600" class="g"/><path d="M0,240 H600" class="g"/><path d="M280,0 V600" class="g"/><path d="M0,280 H600" class="g"/><path d="M320,0 V600" class="g"/><path d="M0,320 H600" class="g"/><path d="M360,0 V600" class="g"/><path d="M0,360 H600" class="g"/><path d="M400,0 V600" class="g"/><path d="M0,400 H600" class="g"/><path d="M440,0 V600" class="g"/><path d="M0,440 H600" class="g"/><path d="M480,0 V600" class="g"/><path d="M0,480 H600" class="g"/><path d="M520,0 V600" class="g"/><path d="M0,520 H600" class="g"/><path d="M560,0 V600" class="g"/><path d="M0,560 H600" class="g"/><path d="M600,0 V600" class="g"/><path d="M0,600 H600" class="g"/>
+<rect x="0" y="0" width="600" height="600" fill="none" stroke="#D2CFC7" stroke-width="1"/>
+<circle class="sig" cx="544" cy="56" r="9"/>
+<text class="eye" x="56" y="92" text-anchor="start">2025 · AgriBot AI</text>
+<text class="ttl" x="56" y="210" text-anchor="start">Crop and fertiliser</text><text class="ttl" x="56" y="260" text-anchor="start">recommendation on a</text><text class="ttl" x="56" y="310" text-anchor="start">Raspberry Pi</text>
+<path class="rule" d="M56,410 H544"/>
+<text class="val" x="56" y="482" text-anchor="start">99%</text>
+<text class="lab" x="56" y="528" text-anchor="start">XGBoost accuracy on held-out data</text>
+</svg>

@@ -1,0 +1,699 @@
+/* ==========================================================================
+   yaman-portfolio — design tokens and shared shell
+   Owned by Phase 0. Later phases APPEND their own blocks; they do not edit
+   the rules above their block. See docs/phases/.
+   ========================================================================== */
+
+/* ==========================================================================
+   Metric-matched fallbacks.
+
+   Google Fonts load with display=swap, so the fallback paints first and the
+   webfont replaces it. If the two have different metrics the text reflows and
+   everything below it jumps — cumulative layout shift.
+
+   These size-adjust values were MEASURED in the browser against the real
+   webfonts (100px probe, same string):
+     Bricolage Grotesque vs Arial   1984/2072 = 95.7%
+     IBM Plex Sans Arabic vs Arial  2125/2072 = 102.6%
+     JetBrains Mono vs Menlo        2520/2529 = 99.7%
+   The mono case is the important one: against the GENERIC monospace the
+   mismatch was 133.9%, and mono carries every label and eyebrow on the site.
+   Re-measure if a family or weight changes.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Display fallback";
+  src: local("Arial"), local("Helvetica Neue"), local("Liberation Sans");
+  size-adjust: 95.7%;
+  ascent-override: 92%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Body fallback";
+  src: local("Arial"), local("Helvetica Neue"), local("Liberation Sans");
+  size-adjust: 102.6%;
+  ascent-override: 92%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Mono fallback";
+  src: local("Menlo"), local("Consolas"), local("DejaVu Sans Mono");
+  size-adjust: 99.7%;
+  ascent-override: 92%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+
+:root {
+  /* --- surface ------------------------------------------------------------
+     Paper is warm off-white; paper-lift is the one step up used for cards
+     and the topbar so a raised surface reads without a shadow. */
+  --paper:        #F7F6F2;
+  --paper-lift:   #FEFEFC;
+
+  /* --- ink ----------------------------------------------------------------
+     All three pass 4.5:1 on --paper, so no ink value can fail body text:
+     ink 16.75:1 · ink-2 7.62:1 · ink-3 6.23:1 */
+  --ink:          #14161A;
+  --ink-2:        #4A4F57;
+  --ink-3:        #565C66;
+
+  /* --- mint ---------------------------------------------------------------
+     THE RULE: --mint is the only mint allowed on text or a focus ring.
+     It is 5.99:1 on --paper, clearing the 4.5:1 body-text floor.
+     --mint-soft and --mint-glow are DECORATIVE ONLY — 1.54:1 and 1.07:1.
+     Putting text on either fails WCAG. Phase 7 will check this. */
+  --mint:         #0B6B53;
+  --mint-soft:    #7FD9BE;
+  --mint-glow:    #D6F5EA;
+
+  /* --- rules --------------------------------------------------------------
+     line draws borders; line-soft draws the paper grid. */
+  --line:         #D2CFC7;
+  --line-soft:    #E4E2DB;
+
+  /* --- type ---------------------------------------------------------------
+     Mono is for labels, metadata and eyebrows only — never body copy. */
+  --font-display: "Bricolage Grotesque", "Display fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-body:    "IBM Plex Sans Arabic", "Body fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", "Mono fallback", ui-monospace, "SF Mono", monospace;
+
+  /* --- measure ------------------------------------------------------------ */
+  --shell:        72rem;          /* 1152px = 12 arterials, so page content
+                                     lands on the same lines the grid draws */
+  --gutter:       1.5rem;
+  --radius:       0.5rem;
+
+  /* --- grid ---------------------------------------------------------------
+     The paper grid: the traffic-map vernacular. Two weights — arterials every
+     fourth line, side streets between — so the grid is a measurement system
+     rather than wallpaper. Every page shares it. */
+  --cell:         24px;
+  --arterial:     calc(var(--cell) * 4);   /* 96px */
+
+  /* --- card surfaces -------------------------------------------------------
+     A fill is a statement about WHAT a card holds, never decoration:
+       raised = an artifact you can go and look at
+       live   = the one currently-true fact (mint means current)
+       sunk   = supporting credentials and details
+     Five surfaces, each answering "what KIND of thing is in this card?" — a
+     fill is never decoration and never encodes a level or a rating.
+     All four ink colours clear 4.5:1 on every one of them; the lowest pairing
+     is mint on --surface-index at 5.44:1. Re-verify if any value changes. */
+  --surface-raised: #FEFEFC;   /* an artifact you can go and look at   */
+  --surface-live:   #D6F5EA;   /* the one currently-true fact          */
+  --surface-sunk:   #F1EFE8;   /* record: credentials, dates, contact  */
+  --surface-read:   #F2F4F3;   /* prose you read start to finish       */
+  --surface-index:  #E9ECE8;   /* an inventory you scan, never read    */
+}
+
+/* ==========================================================================
+   Reset — only what the shell actually needs.
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Any author `display` declaration beats the UA stylesheet's
+   [hidden] { display: none }, which silently breaks every `el.hidden = true`
+   in the repo (the owner panel, the prev/next nav, the error boxes).
+   This rule makes the hidden property mean what it says, everywhere. */
+[hidden] { display: none !important; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ink);
+  background-color: var(--paper);
+
+  /* The paper grid. Arterials in --line, side streets in --line-soft; neither
+     may compete with text. */
+  background-image:
+    linear-gradient(to right,  var(--line)      1px, transparent 1px),
+    linear-gradient(to right,  var(--line-soft) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line-soft) 1px, transparent 1px);
+  background-size:
+    var(--arterial) 100%,
+    var(--cell) 100%,
+    100% var(--cell);
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin: 0;
+  font-optical-sizing: auto;   /* Bricolage carries an opsz axis; let it work */
+  /* Sentence case everywhere — see AGENTS.md. No text-transform here. */
+}
+
+/* Leading tracks size inversely, tracking tightens as size grows. */
+h1 { font-size: clamp(1.75rem, 5vw, 2.75rem); line-height: 1.05; letter-spacing: -0.025em; }
+h2 { font-size: 1.25rem;  line-height: 1.15; letter-spacing: -0.015em; }
+h3 { font-size: 1rem;     line-height: 1.25; letter-spacing: -0.005em; }
+
+/* Body sits near zero tracking with comfortable leading. */
+p { text-wrap: pretty; }
+
+a { color: var(--mint); }
+
+/* ==========================================================================
+   Focus — defined once, inherited by every phase.
+   ========================================================================== */
+
+:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Feedback belongs on pointer-down. Waiting for the click to acknowledge a
+   press is the moment directness falls away. */
+a, button { -webkit-tap-highlight-color: transparent; }
+a:active, button:active { opacity: 0.68; }
+
+/* ==========================================================================
+   Shell — identical on every page. Copied markup, not a template.
+   ========================================================================== */
+
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Skip link — first in tab order, visible only on focus. */
+.skip {
+  position: absolute;
+  left: var(--gutter);
+  top: -4rem;
+  z-index: 10;
+  padding: 0.6rem 1rem;
+  background: var(--paper-lift);
+  border: 1px solid var(--mint);
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  text-decoration: none;
+  transition: top 160ms ease;
+}
+.skip:focus { top: 0.75rem; }
+
+/* A floating translucent layer rather than an opaque strip: the paper grid and
+   the content pass underneath it, which is what makes it read as a material
+   sitting above the page rather than a band cut out of it. */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: color-mix(in srgb, var(--paper-lift) 72%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, transparent);
+}
+
+/* Scroll edge effect instead of a hard divider: a short fade where content
+   meets the floating chrome, only directly beneath it. */
+.topbar::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  height: 1.5rem;
+  pointer-events: none;
+  background: linear-gradient(to bottom,
+    color-mix(in srgb, var(--paper) 60%, transparent), transparent);
+}
+
+.topbar__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  min-height: 3.5rem;
+  padding-block: 0.6rem;
+}
+
+.mark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-inline-start: auto;
+}
+
+.nav a {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--ink-2);
+  text-decoration: none;
+  padding-block: 0.25rem;
+  border-bottom: 1px solid transparent;
+}
+.nav a:hover,
+.nav a[aria-current="page"] {
+  color: var(--mint);
+  border-bottom-color: var(--mint);
+}
+
+/* Role pill. Phase 0 ships it static; Phase 6 makes it reflect ?owner=1.
+   It is a label, never a claim of protection — see phase-6-owner-mode.md. */
+.pill {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  background: var(--mint-glow);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  white-space: nowrap;
+}
+
+main { display: block; flex: 1; }
+
+.site-footer {
+  margin-top: 4rem;
+  border-top: 1px solid var(--line);
+  background: var(--paper-lift);
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  justify-content: space-between;
+  padding-block: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--ink-2);
+}
+
+.site-footer a { color: var(--mint); }
+
+/* Eyebrow — the mono label used above headings across the site. */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  margin: 0 0 0.75rem;
+}
+
+/* ==========================================================================
+   Reduced motion — global, so no later phase has to remember it.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Translucency is a preference, not a given: make the material solid rather
+   than frosted when the reader has asked for less transparency. */
+@media (prefers-reduced-transparency: reduce) {
+  .topbar {
+    background: var(--paper-lift);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .topbar::after { display: none; }
+}
+
+/* More contrast: near-solid surfaces with a defined border. */
+@media (prefers-contrast: more) {
+  .topbar {
+    background: var(--paper-lift);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-bottom-color: var(--ink-3);
+  }
+}
+
+/* --- Phase 0 landing block. Phase 1 replaces this with the real hero. --- */
+.foundation { padding-block: 5rem 6rem; }
+.foundation h1 { font-size: clamp(1.75rem, 5vw, 2.75rem); max-width: 20ch; }
+
+/* ==========================================================================
+   Phase 2 — projects index. The cards are parcels in the shared sheet.
+   ========================================================================== */
+
+.parcel--head    { grid-column: 1 / 13; grid-row: 1; }
+.parcel--filters { grid-column: 1 / 13; grid-row: 2; background: var(--surface-sunk); }
+
+.parcel--head h1 {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  line-height: calc(var(--cell) * 1.5);
+  letter-spacing: -0.024em;
+  max-width: 24ch;
+  margin: 0;
+}
+.parcel--head .eyebrow { margin: 0 0 var(--cell); }
+
+/* Every project card is identical — the index ranks nothing. */
+.grid { display: contents; }
+.parcel.card {
+  grid-column: span 4;
+  background: var(--surface-index);
+  text-decoration: none;
+  color: inherit;
+  gap: calc(var(--cell) / 4);
+}
+a.parcel.card:hover { background: var(--surface-raised); }
+.card[aria-disabled="true"] { color: var(--ink-3); }
+
+.card > * { margin: 0; }
+.card__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: var(--cell);
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+  margin: 0;
+}
+.card__title {
+  font-size: 1.0625rem;
+  line-height: calc(var(--cell) * 1.25);
+  letter-spacing: -0.012em;
+  margin: 0;
+}
+.card__stack {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: var(--cell);
+  color: var(--ink-2);
+  margin: 0;
+}
+.card__figure {
+  display: flex; align-items: baseline; gap: calc(var(--cell) / 2);
+  flex-wrap: wrap;
+  margin: calc(var(--cell) / 2) 0 0;
+  padding-top: calc(var(--cell) / 2);
+  border-top: 1px solid var(--line-soft);
+}
+.card__value {
+  font-family: var(--font-display);
+  font-size: 1.5rem; font-weight: 700; color: var(--mint); line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.card__label { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--ink-3); }
+.card__go {
+  font-family: var(--font-mono); font-size: 0.6875rem; color: var(--mint);
+  line-height: var(--cell); margin: calc(var(--cell) / 2) 0 0;
+}
+.card[aria-disabled="true"] .card__go { color: var(--ink-3); }
+
+.filters { display: flex; flex-wrap: wrap; gap: calc(var(--cell) / 3); }
+.chip {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: var(--cell);
+  color: var(--ink-2);
+  background: var(--paper-lift);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0 calc(var(--cell) / 1.5);
+  cursor: pointer;
+}
+.chip:hover { border-color: var(--mint); color: var(--mint); }
+.chip[aria-pressed="true"] { background: var(--mint); border-color: var(--mint); color: var(--paper); }
+.chip--clear { border-style: dashed; }
+.index-status {
+  font-family: var(--font-mono); font-size: 0.75rem; line-height: var(--cell);
+  color: var(--ink-3); margin: var(--cell) 0 0;
+}
+
+@media (max-width: 999px) {
+  .parcel--head, .parcel--filters { grid-column: 1 / 7; }
+  .parcel.card { grid-column: span 3; }
+}
+
+/* The project cards are created by JS, so no CSS rule can reserve their space
+   — the elements do not exist at first paint, and five cards appearing at once
+   shoved the footer down. The sheet holds the lattice open at the measured
+   settled height until the cards land, then projects-index.js drops the class.
+   The reserve must NOT survive rendering: filtering to one project would
+   otherwise leave a screen of dead space.
+   Measured with the five real records: 1251px at 12 columns, 1928px stacked.
+   RE-MEASURE if a project is added or removed. */
+.sheet--reserving { min-height: 1251px; }
+@media (max-width: 699px) { .sheet--reserving { min-height: 1928px; } }
+
+.error {
+  border: 1px solid var(--mint);
+  border-radius: var(--radius);
+  background: var(--paper-lift);
+  padding: 1.25rem;
+  margin-block: 1.5rem;
+}
+.error p { margin: 0 0 0.5rem; }
+.error__detail { color: var(--ink-2); font-size: 0.875rem; }
+.mono { font-family: var(--font-mono); font-size: 0.8125rem; }
+
+/* ==========================================================================
+   Phase 6 — owner mode. Appended; nothing above this line was edited.
+   Not authentication: no lock iconography, no "secure" language anywhere.
+   ========================================================================== */
+
+.owner__toggle {
+  position: fixed;
+  inset-block-end: 1rem;
+  inset-inline-end: 1rem;
+  z-index: 20;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--paper);
+  background: var(--mint);
+  border: 1px solid var(--mint);
+  border-radius: 999px;
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+}
+
+.owner {
+  position: fixed;
+  inset-block: 0;
+  inset-inline-end: 0;
+  z-index: 30;
+  width: min(24rem, 100%);
+  overflow-y: auto;
+  background: var(--paper-lift);
+  border-inline-start: 1px solid var(--line);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.owner__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.owner__title { font-family: var(--font-display); font-weight: 600; font-size: 1.0625rem; margin: 0; }
+.owner__close {
+  font-size: 1rem; line-height: 1; cursor: pointer;
+  background: none; border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 0.3rem 0.5rem; color: var(--ink-2);
+}
+
+.owner__note { font-size: 0.8125rem; color: var(--ink-2); margin: 0; }
+.owner__source, .owner__state {
+  font-family: var(--font-mono); font-size: 0.6875rem; color: var(--ink-3); margin: 0;
+}
+
+.owner__body { display: flex; flex-direction: column; gap: 0.75rem; }
+
+/* The record being edited is stated loudly — editing the wrong project
+   silently is the failure mode this panel has to prevent. */
+.owner__editing {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--mint);
+  background: var(--mint-glow);
+  border: 1px solid var(--mint);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.7rem;
+  margin: 0;
+}
+
+.owner__field { display: flex; flex-direction: column; gap: 0.25rem; }
+.owner__label { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--ink-3); }
+.owner__field input,
+.owner__field textarea,
+.owner__field select {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.45rem 0.6rem;
+  width: 100%;
+}
+.owner__field textarea { resize: vertical; }
+
+.owner__actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; padding-top: 0.75rem; }
+.owner__actions .btn {
+  font-family: var(--font-mono); font-size: 0.75rem; cursor: pointer;
+  border-radius: var(--radius); padding: 0.5rem 0.8rem;
+  border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+}
+.owner__actions .btn--primary { background: var(--mint); border-color: var(--mint); color: var(--paper); }
+.owner__discard { border-style: dashed; color: var(--ink-2); }
+
+
+/* ==========================================================================
+   Shared tag component — used by the home Stack row and every case study's
+   Stack block. Phase 3 calls it "the same component as the home page", so it
+   lives here rather than in either page's own stylesheet.
+   ========================================================================== */
+
+.tags, .plain { list-style: none; margin: 0; padding: 0; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-2);
+  background: var(--paper-lift);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+}
+
+/* ==========================================================================
+   The sheet — the site's card lattice.
+
+   Parcels abut with zero gutters and share single hairlines, so every card
+   edge lands on an arterial of the paper grid. Nothing floats, nothing is
+   rounded, nothing has a shadow.
+
+   THE RULE: no raw vertical length in any sheet stylesheet. Every
+   padding-block, margin-block and line-height is a multiple of --cell (24px).
+   One `line-height: 1.6` and every parcel below it drifts off the grid.
+
+   The container supplies the top and left hairline, each parcel supplies its
+   right and bottom, so every interior edge is exactly 1px and never doubled.
+   ========================================================================== */
+
+.sheet-page { --pad: calc(var(--cell) * 2); }        /* 48px parcel padding */
+
+.sheet {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0;
+  width: min(var(--shell), 100%);
+  margin-inline: auto;
+  margin-block: calc(var(--cell) * 3) calc(var(--cell) * 4);
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  position: relative;
+
+  /* Without this, a min-height reserve on the grid STRETCHES the existing rows
+     to fill it — so the head card ballooned before the cards landed and then
+     shrank when they arrived, which was the whole layout shift. Extra height
+     belongs at the bottom of the lattice, not inside its rows. */
+  align-content: start;
+}
+
+.parcel {
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: var(--pad);
+  margin: 0;
+  min-width: 0;                 /* the 360px overflow guard */
+  align-content: start;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+}
+
+.parcel__label {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: var(--cell);
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+  margin: 0 0 var(--cell);
+  font-variant-numeric: tabular-nums;
+}
+
+.parcel p { margin: 0 0 var(--cell); max-width: 64ch; }
+.parcel p:last-child { margin-bottom: 0; }
+.parcel p, .parcel li, .parcel dd { font-size: 1rem; line-height: var(--cell); }
+
+/* Registration marks: two, at the sheet's corners. Never tiled. */
+.sheet::before, .sheet::after {
+  content: "";
+  position: absolute;
+  width: 9px; height: 9px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--ink-3) 0 0) center / 1px 100% no-repeat,
+    linear-gradient(var(--ink-3) 0 0) center / 100% 1px no-repeat;
+}
+.sheet::before { top: -5px; left: -5px; }
+.sheet::after  { bottom: -5px; right: -5px; }
+
+@media (max-width: 999px) {
+  .sheet-page { --pad: calc(var(--cell) * 1.5); }
+  .sheet { grid-template-columns: repeat(6, 1fr); }
+}
+
+/* Full bleed on phones — a map has no margin. */
+@media (max-width: 699px) {
+  .sheet-page { --pad: var(--cell); }
+  .sheet {
+    grid-template-columns: 1fr;
+    width: 100%;
+    margin-block: 0 calc(var(--cell) * 2);
+    border-left: 0;
+  }
+  .parcel { border-right: 0; grid-column: 1 !important; grid-row: auto !important; }
+  .sheet::before, .sheet::after { display: none; }
+}
+
+/* --- shared label/value pairs -------------------------------------------- */
+.pairs { margin: 0; display: grid; gap: calc(var(--cell) / 2) var(--cell); }
+.pairs div { display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 0 var(--cell); }
+.pairs dt {
+  font-family: var(--font-mono); font-size: 0.75rem; line-height: var(--cell);
+  letter-spacing: 0.04em; color: var(--ink-3);
+}
+.pairs dd { margin: 0; overflow-wrap: anywhere; }
+
+/* --- buttons -------------------------------------------------------------- */
+.btn {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: var(--cell);
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--paper-lift);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: calc(var(--cell) / 4) calc(var(--cell) / 1.5);
+}
+.btn:hover { border-color: var(--mint); color: var(--mint); }
+.btn--primary { background: var(--mint); border-color: var(--mint); color: var(--paper); }
+.btn--primary:hover { color: var(--paper); opacity: 0.92; }

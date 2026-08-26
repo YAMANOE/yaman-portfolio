@@ -1,0 +1,151 @@
+/* Phase 1 — home page. Owned by Phase 1; styles.css is not edited. */
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  margin: -1px; padding: 0; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+
+/* --- placement -----------------------------------------------------------
+   Same lattice as the About sheet. Every row fully occupied at every
+   breakpoint; no auto-placement.
+
+     row 1   hero 1-12
+     row 2   selected work 1-12          (the carousel needs the full width)
+     row 3   AI systems 1-4 | computer vision 5-8 | shipping it 9-12
+     row 4   stack 1-12
+     row 5   contact 1-12                                                    */
+.parcel--hero  { grid-column: 1 / 13; grid-row: 1; }
+.parcel--work  { grid-column: 1 / 13; grid-row: 2; }
+.parcel--do:nth-of-type(3) { grid-column: 1 / 5;  grid-row: 3; }
+.parcel--do:nth-of-type(4) { grid-column: 5 / 9;  grid-row: 3; }
+.parcel--do:nth-of-type(5) { grid-column: 9 / 13; grid-row: 3; }
+.parcel--stack { grid-column: 1 / 13; grid-row: 4; }
+.parcel--cta   { grid-column: 1 / 13; grid-row: 5; }
+
+@media (max-width: 999px) {
+  .parcel--hero  { grid-column: 1 / 7; }
+  .parcel--work  { grid-column: 1 / 7; }
+  .parcel--do:nth-of-type(3) { grid-column: 1 / 7; grid-row: 3; }
+  .parcel--do:nth-of-type(4) { grid-column: 1 / 7; grid-row: 4; }
+  .parcel--do:nth-of-type(5) { grid-column: 1 / 7; grid-row: 5; }
+  .parcel--stack { grid-column: 1 / 7; grid-row: 6; }
+  .parcel--cta   { grid-column: 1 / 7; grid-row: 7; }
+}
+
+/* --- fills ---------------------------------------------------------------
+   Same meanings as the About sheet:
+     raised  the work you can go and look at, and the contact action
+     index   the three practice areas — an inventory, scanned
+     sunk    the stack — a record
+     none    the hero, which is the sheet's own title block                  */
+.parcel--work  { background: var(--surface-raised); }
+.parcel--do    { background: var(--surface-index); }
+.parcel--stack { background: var(--surface-sunk); }
+.parcel--cta   { background: var(--surface-raised); }
+
+/* --- 1. Hero --- */
+/* --- 2. Selected work / coverflow --- */
+
+.cf {
+  position: relative;
+  height: 300px;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  touch-action: pan-y;              /* vertical scroll still belongs to the page */
+  cursor: grab;
+  overflow: hidden;
+}
+.cf.is-dragging { cursor: grabbing; }
+
+.cf__card {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 240px; height: 240px;
+  margin: -120px 0 0 -120px;        /* square, same crop for every cover */
+  will-change: transform, opacity;
+  transition: transform 120ms linear, opacity 120ms linear;
+  backface-visibility: hidden;
+}
+.cf.is-dragging .cf__card { transition: none; }
+
+.cf__img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-lift);
+  pointer-events: none;
+  user-select: none;
+}
+.cf__hit { position: absolute; inset: 0; border-radius: var(--radius); }
+
+.cf__controls {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; margin-block: 1.25rem;
+}
+.arrow {
+  font-family: var(--font-mono); font-size: 1rem; line-height: 1;
+  color: var(--ink-2); background: var(--paper-lift);
+  border: 1px solid var(--line); border-radius: 50%;
+  width: 2.25rem; height: 2.25rem; cursor: pointer;
+}
+.arrow:hover { border-color: var(--mint); color: var(--mint); }
+
+.dots { display: flex; gap: 0.25rem; }
+
+/* The dot LOOKS 8px but the button is 24x24 — WCAG 2.2 target size (2.5.8).
+   The visible mark is drawn by ::after so the hit area can be larger than it. */
+.dot {
+  width: 1.5rem; height: 1.5rem;
+  padding: 0; border: 0; background: none;
+  position: relative; cursor: pointer;
+  border-radius: 50%;
+}
+.dot::after {
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0.5rem; height: 0.5rem;
+  border-radius: 50%;
+  background: var(--paper-lift);
+  border: 1px solid var(--line);
+}
+.dot[aria-pressed="true"]::after { background: var(--mint); border-color: var(--mint); }
+.dot:hover::after { border-color: var(--mint); }
+
+/* --- caption --- */
+.cap { min-height: 14rem; max-width: 58ch; margin-inline: auto; text-align: center; }
+.cap__title { font-size: 1.375rem; margin: 0 0 0.5rem; }
+.cap__summary { color: var(--ink-2); margin: 0 0 1rem; }
+
+.cap__meta {
+  display: grid; gap: 0.25rem;
+  margin: 0 0 1rem; text-align: start;
+  max-width: 34rem; margin-inline: auto;
+}
+.cap__row {
+  display: flex; flex-wrap: wrap; gap: 0.25rem 1rem;
+  padding-block: 0.3rem; border-top: 1px solid var(--line-soft);
+}
+.cap__row dt {
+  font-family: var(--font-mono); font-size: 0.6875rem;
+  color: var(--ink-3); flex: 0 0 9rem;
+}
+.cap__row dd { margin: 0; font-size: 0.9375rem; color: var(--ink-2); }
+.cap__figure { font-family: var(--font-display); font-weight: 700; color: var(--mint); }
+
+.cap__link { font-family: var(--font-mono); font-size: 0.8125rem; }
+.cap__link--none { color: var(--ink-3); }
+
+/* Reduced motion: the carousel still moves when the reader asks it to, but it
+   never eases and never moves on its own. coverflow.js snaps instead. */
+@media (prefers-reduced-motion: reduce) {
+  .cf__card { transition: none; }
+}
+
+@media (max-width: 560px) {
+  .cf { height: 240px; }
+  .cf__card { width: 180px; height: 180px; margin: -90px 0 0 -90px; }
+  .cap__row dt { flex-basis: 100%; }
+}

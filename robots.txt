@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://YAMANOE.github.io/yaman-portfolio/sitemap.xml

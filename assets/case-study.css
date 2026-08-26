@@ -1,0 +1,250 @@
+/* Phase 3 — case study template. Owned by Phase 3; styles.css untouched. */
+
+.case { padding-block: calc(var(--cell) * 3) calc(var(--cell) * 2); }
+
+/* Two columns once there is room for the table of contents. */
+@media (min-width: 900px) {
+  .case {
+    display: grid;
+    grid-template-columns: 12rem minmax(0, 1fr);
+    gap: 3rem;
+    align-items: start;
+  }
+}
+
+/* --- table of contents ---
+   Hidden below 900px. It is display:none rather than visually hidden so it
+   leaves the tab order entirely on mobile — nothing to tab through twice. */
+.toc { display: none; }
+
+@media (min-width: 900px) {
+  .toc {
+    display: block;
+    position: sticky;
+    top: 4.5rem;                 /* clears the sticky topbar */
+    max-height: calc(100dvh - 6rem);
+    overflow-y: auto;
+  }
+  .toc__heading {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+    margin: 0 0 0.75rem;
+  }
+  .toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-inline-start: 1px solid var(--line);
+  }
+  .toc a {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-2);
+    text-decoration: none;
+    padding: 0.3rem 0 0.3rem 0.75rem;
+    margin-inline-start: -1px;
+    border-inline-start: 1px solid transparent;
+  }
+  .toc a:hover { color: var(--mint); }
+  .toc a[aria-current="true"] {
+    color: var(--mint);
+    border-inline-start-color: var(--mint);
+  }
+}
+
+/* --- blocks ---
+   Fixed order, never collapsible: a reviewer skims by scrolling, not clicking. */
+.case__body { min-width: 0; }
+
+.case__body {
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+
+/* Each block is a parcel: same hairlines, same fills, same meanings as the
+   About sheet and the projects index. */
+.case__block {
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: calc(var(--cell) * 2);
+  scroll-margin-top: calc(var(--cell) * 4);
+  background: transparent;
+}
+
+/*  raised  the hero — the artifact this page is about
+    read    problem, approach, what I learned — prose
+    sunk    my role, stack, links — the record
+    index   results — figures, scanned                                        */
+#hero     { background: var(--surface-raised); }
+#problem,
+#approach,
+#learned  { background: var(--surface-read); }
+#role,
+#stack,
+#links    { background: var(--surface-sunk); }
+#results  { background: var(--surface-index); }
+
+@media (max-width: 699px) {
+  .case__block { padding: var(--cell); border-right: 0; }
+  .case__body { border-left: 0; }
+}
+
+.case__block h2 { font-size: 1.25rem; line-height: calc(var(--cell) * 1.25); letter-spacing: -0.015em; margin: 0 0 var(--cell); }
+.case__block h3 {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  line-height: var(--cell);
+  margin: calc(var(--cell) * 1.5) 0 calc(var(--cell) / 2);
+}
+.case__block p { margin: 0 0 var(--cell); max-width: 66ch; line-height: var(--cell); }
+.case__block p:last-child { margin-bottom: 0; }
+
+.case__block--hero h1 { font-size: clamp(1.75rem, 5vw, 2.5rem); margin: 0 0 0.75rem; }
+.case__standfirst { font-size: 1.0625rem; color: var(--ink-2); }
+
+.case__figure {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-block: 1.25rem;
+}
+.case__value {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 700;
+  color: var(--mint);
+  line-height: 1;
+}
+.case__label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-3); }
+
+.case__hero-media, .case__diagram { margin: 1.5rem 0; }
+.case__hero-media figcaption, .case__diagram figcaption {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--ink-3);
+  margin-top: 0.5rem;
+}
+
+/* Placeholder box — Phase 4 replaces these with real diagrams or screenshots. */
+.case__placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 12rem;
+  padding: 1.5rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-3);
+  background: var(--paper-lift);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+}
+
+.case__meta { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; }
+.case__meta-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-3);
+  flex: 0 0 4.5rem;
+}
+
+/* Wide tables scroll inside their own box; the page never scrolls sideways. */
+.case__table {
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  margin-block: 1rem;
+}
+.case__table caption {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--ink-3);
+  text-align: start;
+  margin-bottom: 0.5rem;
+}
+.case__table th, .case__table td {
+  text-align: start;
+  padding: 0.5rem 1rem 0.5rem 0;
+  border-bottom: 1px solid var(--line-soft);
+  white-space: nowrap;
+}
+.case__table th { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-3); font-weight: 400; }
+
+/* .tags/.tag now live in styles.css — shared with the home page. */
+.case__links li { padding-block: 0.3rem; }
+
+/* --- prev / next --- */
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  padding-block: 2rem 4rem;
+  border-top: 1px solid var(--line);
+}
+.pagination__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  text-decoration: none;
+  color: inherit;
+  max-width: 22rem;
+}
+.pagination__link--next { margin-inline-start: auto; text-align: end; }
+.pagination__rel {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+}
+.pagination__title { font-family: var(--font-display); font-weight: 600; color: var(--mint); }
+.pagination__link[aria-disabled="true"] .pagination__title { color: var(--ink-3); }
+.pagination__todo { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-3); margin: 0; }
+
+/* --- Phase 4 additions: real content rendering --- */
+
+.case__svg {
+  width: 100%; height: auto;
+  background: var(--paper-lift);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+
+.figs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+  gap: 1.25rem;
+  margin-block: 1rem 1.5rem;
+}
+.fig { display: flex; flex-direction: column; gap: 0.2rem; }
+.fig__value {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 700;
+  color: var(--mint);
+  line-height: 1;
+}
+.fig__value--todo { font-family: var(--font-mono); font-size: 1rem; color: var(--ink-3); }
+.fig__label { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--ink-3); }
+
+.case__note { font-size: 0.875rem; color: var(--ink-3); }
+.case__nolink { color: var(--ink-2); max-width: 60ch; }
+
+/* Subtitle sits between the project name (h1) and the standfirst. The h1 is
+   the project's name from data/projects.json; this is what it is. */
+.case__subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--ink-3);
+  margin: 0 0 0.75rem;
+}

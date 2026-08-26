@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgriBot AI — Yaman Obaidat</title>
+<meta name="description" content="Crop and fertiliser recommendation on a Raspberry Pi — Runs on a Raspberry Pi with live sensor input. Code and training pipeline are public.">
+<link rel="canonical" href="https://YAMANOE.github.io/yaman-portfolio/projects/agribot.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yaman Obaidat">
+<meta property="og:url" content="https://YAMANOE.github.io/yaman-portfolio/projects/agribot.html">
+<meta property="og:title" content="AgriBot AI — Yaman Obaidat">
+<meta property="og:description" content="Crop and fertiliser recommendation on a Raspberry Pi — Runs on a Raspberry Pi with live sensor input. Code and training pipeline are public.">
+<!-- Social crawlers cannot resolve relative URLs, so these two are absolute. -->
+<meta property="og:image" content="https://YAMANOE.github.io/yaman-portfolio/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Yaman Obaidat — AI/ML Engineer. Civic tech, computer vision, multi-agent systems.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AgriBot AI — Yaman Obaidat">
+<meta name="twitter:description" content="Crop and fertiliser recommendation on a Raspberry Pi — Runs on a Raspberry Pi with live sensor input. Code and training pipeline are public.">
+<meta name="twitter:image" content="https://YAMANOE.github.io/yaman-portfolio/assets/og-image.png">
+
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans+Arabic:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../assets/styles.css">
+<link rel="stylesheet" href="../assets/case-study.css">
+</head>
+<body class="sheet-page" data-slug="agribot">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="shell topbar__inner">
+    <a class="mark" href="../index.html">Yaman Obaidat</a>
+    <nav class="nav" aria-label="Main">
+      <a href="../index.html">Home</a>
+      <a href="../projects.html">Projects</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <span class="pill">Reviewer</span>
+  </div>
+</header>
+
+<main id="main">
+  <div class="shell case">
+
+    <nav class="toc" aria-label="On this page">
+      <p class="toc__heading">On this page</p>
+      <ol>
+        <li><a href="#hero">Overview</a></li>
+        <li><a href="#problem">Problem</a></li>
+        <li><a href="#role">My role</a></li>
+        <li><a href="#approach">Approach</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="#links">Links</a></li>
+        <li><a href="#learned">What I learned</a></li>
+      </ol>
+    </nav>
+
+    <article class="case__body">
+
+      <!-- 1 -->
+      <section id="hero" class="case__block case__block--hero" aria-labelledby="hero-h">
+        <p class="eyebrow">2025 · Graduation project · Yarmouk University · source public</p>
+        <h1 id="hero-h">AgriBot AI</h1>
+        <p class="case__subtitle">Crop and fertiliser recommendation on a Raspberry Pi</p>
+        <p class="case__standfirst">Runs on a Raspberry Pi with live sensor input. Code and training pipeline are public.</p>
+
+        <p class="case__figure">
+          <span class="case__value">99%</span>
+          <span class="case__label">XGBoost accuracy on held-out data</span>
+        </p>
+
+        <figure class="case__hero-media">
+          <img src="../assets/diagrams/agribot.svg" alt="IoT sensors feed a feature build, which feeds an XGBoost model, which produces a recommendation." width="720" height="175" class="case__svg">
+          <figcaption>The flow this case study is about. One node is highlighted: the decision the system is known for.</figcaption>
+        </figure>
+      </section>
+
+      <!-- 2 -->
+      <section id="problem" class="case__block" aria-labelledby="problem-h">
+        <h2 id="problem-h">Problem</h2>
+        <p>The recommendation had to run in the field, on a Raspberry Pi reading live soil and weather sensors, with no reliable network to fall back on.</p>
+      </section>
+
+      <!-- 3 -->
+      <section id="role" class="case__block" aria-labelledby="role-h">
+        <h2 id="role-h">My role</h2>
+        <p class="case__meta"><span class="case__meta-label">Built</span><span>Crop &amp; fertiliser recommendation</span></p>
+        <p class="case__meta"><span class="case__meta-label">Context</span><span>Graduation project · Yarmouk University · source public</span></p>
+        <p>The context line above is the honest split: where it says a team size, the
+           system was a team effort and only the named subsystem was mine.</p>
+      </section>
+
+      <!-- 4 -->
+      <section id="approach" class="case__block" aria-labelledby="approach-h">
+        <h2 id="approach-h">Approach</h2>
+
+        <h3>The constraint</h3>
+        <p>Whatever runs there has to fit in the board&#x27;s memory and answer while the operator is still standing in the field. A model that needs an accelerator, or a round trip to a server, is not a candidate however accurate it is.</p>
+
+        <h3>What was rejected</h3>
+        <p>Model capacity against what the board can actually hold and execute. The deep-learning options were out of the argument before accuracy entered it.</p>
+
+        <h3>What I built</h3>
+        <p>I chose gradient-boosted trees over engineered features rather than anything needing an accelerator: XGBoost at 99% and Random Forest at 94% on held-out agricultural and sensor data, both small enough to load and run on the board itself. Inference happens on the device, so a dropped connection degrades reporting rather than recommendations. The code and training pipeline are public.</p>
+      </section>
+
+      <!-- 5 -->
+      <section id="results" class="case__block" aria-labelledby="results-h">
+        <h2 id="results-h">Results</h2>
+        <div class="figs"><div class="fig"><span class="fig__value">99%</span><span class="fig__label">XGBoost</span></div><div class="fig"><span class="fig__value">94%</span><span class="fig__label">Random forest</span></div><div class="fig"><span class="fig__value">2025</span><span class="fig__label">Graduation year</span></div></div>
+        <p class="case__note">Every number above is measured. None is estimated.</p>
+        <!-- TODO(yaman): before/after figures where a comparison exists. -->
+      </section>
+
+      <!-- 6 -->
+      <section id="stack" class="case__block" aria-labelledby="stack-h">
+        <h2 id="stack-h">Stack</h2>
+        <ul class="tags"><li class="tag">Python</li><li class="tag">XGBoost</li><li class="tag">Random forest</li><li class="tag">Raspberry Pi</li></ul>
+      </section>
+
+      <!-- 7 -->
+      <section id="links" class="case__block" aria-labelledby="links-h">
+        <h2 id="links-h">Links</h2>
+        <ul class="plain case__links">
+          <li><a href="https://github.com/YAMANOE">Repository</a></li>
+          <!-- TODO(yaman): narrow the repository link to the exact repo. -->
+        </ul>
+      </section>
+
+      <!-- 8 -->
+      <section id="learned" class="case__block" aria-labelledby="learned-h">
+        <h2 id="learned-h">What I learned</h2>
+        <p>Runs on a Raspberry Pi with live sensor input. Code and training pipeline are public.</p>
+        <!-- TODO(yaman): one more line — what you would do differently next time. -->
+      </section>
+
+    </article>
+  </div>
+
+  <nav class="shell pagination" id="pagination" aria-label="Other projects"></nav>
+</main>
+
+<footer class="site-footer">
+  <div class="shell site-footer__inner">
+    <span>AI/ML Engineer — civic tech, computer vision, multi-agent systems.</span>
+    <span>Amman, Jordan</span>
+  </div>
+</footer>
+
+<script type="module" src="../assets/case-study.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yaman Obaidat — AI/ML Engineer</title>
+<meta name="description" content="AI/ML Engineer in Amman, Jordan — civic tech, computer vision, multi-agent systems.">
+<link rel="canonical" href="https://YAMANOE.github.io/yaman-portfolio/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yaman Obaidat">
+<meta property="og:url" content="https://YAMANOE.github.io/yaman-portfolio/">
+<meta property="og:title" content="Yaman Obaidat — AI/ML Engineer">
+<meta property="og:description" content="AI/ML Engineer in Amman, Jordan — civic tech, computer vision, multi-agent systems.">
+<!-- Social crawlers cannot resolve relative URLs, so these two are absolute.
+     They are the only absolute paths in the repo. -->
+<meta property="og:image" content="https://YAMANOE.github.io/yaman-portfolio/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Yaman Obaidat — AI/ML Engineer. Civic tech, computer vision, multi-agent systems.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Yaman Obaidat — AI/ML Engineer">
+<meta name="twitter:description" content="AI/ML Engineer in Amman, Jordan — civic tech, computer vision, multi-agent systems.">
+<meta name="twitter:image" content="https://YAMANOE.github.io/yaman-portfolio/assets/og-image.png">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans+Arabic:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/home.css">
+</head>
+<body class="sheet-page">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="shell topbar__inner">
+    <a class="mark" href="index.html">Yaman Obaidat</a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="about.html">About</a>
+    </nav>
+    <span class="pill">Reviewer</span>
+  </div>
+</header>
+
+<main id="main">
+
+  <div class="sheet">
+
+    <!-- 1. Hero -->
+    <section class="parcel parcel--hero" aria-labelledby="hero-h">
+      <p class="eyebrow">AI/ML Engineer · Amman, Jordan</p>
+      <h1 id="hero-h">I build the layer machine-learning systems run on top of.</h1>
+      <p class="hero__lede">
+        Data schemas, services and the verification around them — for a city-scale traffic
+        platform, a national citizen-feedback system and a crisis decision-support service.
+        Most of what I do is making failure loud: an import that exits zero while writing
+        nothing is worse than one that stops the pipeline.
+      </p>
+      <p class="hero__actions">
+        <a class="btn btn--primary" href="projects.html">See the work</a>
+        <!-- TODO(yaman): add the CV PDF and point this at it. -->
+        <a class="btn" href="about.html">About and contact</a>
+      </p>
+    </section>
+
+    <!-- 2. Selected work -->
+    <section class="parcel parcel--work" aria-labelledby="work-h">
+      <h2 class="parcel__label" id="work-h">Selected work</h2>
+
+      <div class="error" id="error" hidden>
+        <p><strong>The project data could not load.</strong></p>
+        <p>This page reads <code class="mono">data/projects.json</code> over the network, which does
+           not work from a <code class="mono">file://</code> address. Serve the folder over http:</p>
+        <p><code class="mono">python3 -m http.server 8000</code></p>
+        <p class="error__detail"><code></code></p>
+      </div>
+
+      <div id="carousel">
+        <div class="cf" id="track" tabindex="0" role="group"
+             aria-roledescription="carousel" aria-label="Selected projects. Use the left and right arrow keys."></div>
+        <div class="cf__controls">
+          <button type="button" class="arrow" id="prev" aria-label="Previous project">←</button>
+          <div class="dots" id="dots" role="group" aria-label="Choose a project"></div>
+          <button type="button" class="arrow" id="next" aria-label="Next project">→</button>
+        </div>
+        <div class="cap" id="caption" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- 3. What I do — one parcel each -->
+    <section class="parcel parcel--do" aria-labelledby="do-1">
+      <h2 class="parcel__label" id="do-1">AI systems</h2>
+      <p>Multi-agent pipelines and the deterministic layers around them. When a claim can be
+         computed rather than generated, I move it off the model.</p>
+    </section>
+    <section class="parcel parcel--do" aria-labelledby="do-2">
+      <h2 class="parcel__label" id="do-2">Computer vision</h2>
+      <p>Detection and tracking on real video, at frame rates that hold on the hardware
+         actually available rather than on a benchmark machine.</p>
+    </section>
+    <section class="parcel parcel--do" aria-labelledby="do-3">
+      <h2 class="parcel__label" id="do-3">Shipping it</h2>
+      <p>Schemas, migrations, gated CI and the invariants that make a silent failure
+         impossible. The part that decides whether any of the rest survives contact.</p>
+    </section>
+
+    <!-- 4. Stack -->
+    <section class="parcel parcel--stack" aria-labelledby="stack-h">
+      <h2 class="parcel__label" id="stack-h">Stack</h2>
+      <ul class="tags" id="stack-row"></ul>
+    </section>
+
+    <!-- 5. Contact -->
+    <section class="parcel parcel--cta" aria-labelledby="contact-h">
+      <h2 class="parcel__label" id="contact-h">Contact</h2>
+      <p class="cta__line">Tell me what you are building.</p>
+      <p class="hero__actions">
+        <!-- TODO(yaman): fill these three hrefs — see data/profile.json contact block. -->
+        <a class="btn btn--primary" href="about.html">Email</a>
+        <a class="btn" href="about.html">LinkedIn</a>
+        <a class="btn" href="https://github.com/YAMANOE">GitHub</a>
+      </p>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="shell site-footer__inner">
+    <span>AI/ML Engineer — civic tech, computer vision, multi-agent systems.</span>
+    <span>Amman, Jordan</span>
+  </div>
+</footer>
+
+<script type="module" src="assets/app.js"></script>
+</body>
+</html>

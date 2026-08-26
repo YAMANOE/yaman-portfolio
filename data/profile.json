@@ -1,0 +1,126 @@
+{
+  "name": "Yaman Khaled Obaidat",
+  "role": "AI/ML Engineer — civic tech, computer vision, multi-agent systems.",
+  "location": "Amman, Jordan",
+  "photo": "",
+  "photoAlt": "TODO(yaman): describe the photo once assets/yaman.jpg exists.",
+  "bio": [
+    "I build the data and service layer that machine-learning systems run on top of.",
+    "Most of my work has been public-sector: a city-scale traffic platform, a national citizen-feedback system, and a crisis decision-support service.",
+    "I care most about the failure modes nobody sees — an import that exits zero while writing nothing, a tenant isolation rule that returns empty rows instead of raising.",
+    "I studied Data Science and Artificial Intelligence at Yarmouk University, finishing in 2025.",
+    "I am now in the 9xAI Program at HTU, working on government civic technology."
+  ],
+  "now": {
+    "heading": "Now",
+    "body": "AI/ML Engineer in the 9xAI Program at HTU, working on government civic technology."
+  },
+  "academic": {
+    "degree": "BSc, Data Science and Artificial Intelligence",
+    "institution": "Yarmouk University",
+    "year": 2025,
+    "graduationProject": {
+      "title": "AgriBot AI",
+      "summary": "A crop and fertiliser recommendation system running on a Raspberry Pi with live soil and weather sensor input. Gradient-boosted trees over engineered features, chosen because the board could hold and execute them: XGBoost at 99% and Random Forest at 94% on held-out agricultural and sensor data.",
+      "link": "projects/agribot.html"
+    },
+    "report": {
+      "title": "TODO(yaman): title of the formal report delivered to the government office",
+      "note": "TODO(yaman): which office received it, and confirm it is cleared for public download.",
+      "file": ""
+    },
+    "researchInterests": "TODO(yaman): two or three sentences. This block is read by admissions committees, so it must be specific about what you want to work on and why — not a list of buzzwords.",
+    "certifications": [
+      {
+        "name": "Data Science and AI",
+        "issuer": "SDK",
+        "year": 2023
+      },
+      {
+        "name": "Data Analytics and Business Intelligence",
+        "issuer": "HTUX",
+        "year": 2025
+      },
+      {
+        "name": "Databases",
+        "issuer": "Udemy",
+        "year": 2025
+      }
+    ]
+  },
+  "skills": [
+    {
+      "heading": "ML and deep learning",
+      "items": [
+        "XGBoost",
+        "Random forest",
+        "RF-DETR",
+        "Object detection and tracking",
+        "Model evaluation"
+      ]
+    },
+    {
+      "heading": "Data",
+      "items": [
+        "PostgreSQL",
+        "pgvector",
+        "Schema design and migrations",
+        "Routing graphs",
+        "Data invariants and verification"
+      ]
+    },
+    {
+      "heading": "Backend and full-stack",
+      "items": [
+        "Python",
+        "FastAPI",
+        "LangGraph",
+        "TypeScript",
+        "Next.js",
+        "Supabase"
+      ]
+    },
+    {
+      "heading": "Tools and deployment",
+      "items": [
+        "Docker",
+        "Redis",
+        "Git and gated CI",
+        "Raspberry Pi",
+        "Linux"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "language": "Arabic",
+      "level": "Native"
+    },
+    {
+      "language": "English",
+      "level": "Professional working proficiency"
+    }
+  ],
+  "contact": [
+    {
+      "label": "Email",
+      "value": "TODO(yaman): the address you want published",
+      "href": ""
+    },
+    {
+      "label": "LinkedIn",
+      "value": "TODO(yaman): profile URL",
+      "href": ""
+    },
+    {
+      "label": "GitHub",
+      "value": "github.com/YAMANOE",
+      "href": "https://github.com/YAMANOE"
+    },
+    {
+      "label": "CV",
+      "value": "TODO(yaman): add the PDF",
+      "href": ""
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects — Yaman Obaidat</title>
+<meta name="description" content="Every project, scannable in under a minute — civic tech, computer vision and multi-agent systems.">
+<link rel="canonical" href="https://YAMANOE.github.io/yaman-portfolio/projects.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yaman Obaidat">
+<meta property="og:url" content="https://YAMANOE.github.io/yaman-portfolio/projects.html">
+<meta property="og:title" content="Projects — Yaman Obaidat">
+<meta property="og:description" content="Every project, scannable in under a minute — civic tech, computer vision and multi-agent systems.">
+<!-- Social crawlers cannot resolve relative URLs, so these two are absolute.
+     They are the only absolute paths in the repo. -->
+<meta property="og:image" content="https://YAMANOE.github.io/yaman-portfolio/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Yaman Obaidat — AI/ML Engineer. Civic tech, computer vision, multi-agent systems.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Projects — Yaman Obaidat">
+<meta name="twitter:description" content="Every project, scannable in under a minute — civic tech, computer vision and multi-agent systems.">
+<meta name="twitter:image" content="https://YAMANOE.github.io/yaman-portfolio/assets/og-image.png">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans+Arabic:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="sheet-page">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="shell topbar__inner">
+    <a class="mark" href="index.html">Yaman Obaidat</a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="about.html">About</a>
+    </nav>
+    <span class="pill">Reviewer</span>
+  </div>
+</header>
+
+<main id="main">
+  <div class="sheet sheet--reserving" id="sheet">
+
+    <section class="parcel parcel--head" aria-labelledby="index-h">
+      <p class="eyebrow">Projects</p>
+      <h1 id="index-h">Everything I have built, and the one number that matters for each.</h1>
+    </section>
+
+    <section class="parcel parcel--filters" aria-labelledby="filters-label">
+      <h2 class="parcel__label" id="filters-label">Filter by stack</h2>
+      <div class="filters" id="filters" role="group" aria-labelledby="filters-label"></div>
+      <p class="index-status" id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <div class="error error--sheet" id="error" hidden>
+      <p><strong>The project data could not load.</strong></p>
+      <p>This page reads <code class="mono">data/projects.json</code> over the network, which
+         does not work from a <code class="mono">file://</code> address. Serve the folder over http:</p>
+      <p><code class="mono">python3 -m http.server 8000</code></p>
+      <p class="error__detail"><code></code></p>
+    </div>
+
+    <!-- Each project is a parcel in the same lattice. display:contents so the
+         cards are direct grid items of the sheet. -->
+    <div class="grid" id="grid"></div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="shell site-footer__inner">
+    <span>AI/ML Engineer — civic tech, computer vision, multi-agent systems.</span>
+    <span>Amman, Jordan</span>
+  </div>
+</footer>
+
+<script type="module" src="assets/projects-index.js"></script>
+</body>
+</html>

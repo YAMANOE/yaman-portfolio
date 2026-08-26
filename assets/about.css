@@ -1,0 +1,315 @@
+/* Phase 5 — about page: the survey sheet.
+
+   ORGANISING IDEA
+   The paper grid's arterial lines ARE the card borders. Cards abut with zero
+   gutters and share single hairlines, so they read as parcels on a block plan
+   rather than tiles floating on a background. Nothing floats, nothing is
+   rounded, nothing has a shadow.
+
+   THE ONE RULE THAT KEEPS IT HONEST
+   No raw vertical length in this file. Every padding-block, margin-block,
+   line-height and row-gap is a multiple of --cell. The moment one value is not,
+   every card below it drifts off the grid and the whole conceit collapses into
+   "grid as wallpaper". Grep for vertical values before changing anything.
+
+   There is NO animation on this page at all. That satisfies
+   prefers-reduced-motion by construction and leaves the spec's whole ban list
+   (hover video, tilt, flips, parallax, scroll-jacking, autoplay) nothing to
+   catch. */
+
+/* --- placement -----------------------------------------------------------
+   Every grid row is fully occupied by named cards at every breakpoint. No
+   grid-auto-flow, no implicit tracks, no auto-placement: an empty cell on a
+   sheet reads as missing data.
+
+   Desktop, twelve columns:
+     row 1   identity 1-8   | portrait 9-10 | now 11-12
+     row 2   bio 1-6        | education 7-12
+     row 3   project 1-6    | certifications 7-12
+     row 4   skill 1-3 | skill 4-6 | skill 7-9 | skill 10-12
+     row 5   languages 1-6  | contact 7-12                                   */
+/* Two tall left parcels, each paired with two short right ones, so no card is
+   left holding a large void. Bio and Graduation project set the row heights;
+   Education/Certifications and Languages/Contact stack beside them.
+
+     row 1   identity 1-8   | now 9-12
+     row 2   bio 1-6  (2 rows) | education 7-12
+     row 3                     | certifications 7-12
+     row 4   project 1-6 (2 rows) | languages 7-12
+     row 5                        | contact 7-12
+     row 6   skill 1-3 | skill 4-6 | skill 7-9 | skill 10-12                */
+.parcel--identity  { grid-column: 1 / 9;   grid-row: 1; }
+.parcel--now       { grid-column: 9 / 13;  grid-row: 1; }
+.parcel--bio       { grid-column: 1 / 7;   grid-row: 2 / 4; }
+.parcel--education { grid-column: 7 / 13;  grid-row: 2; }
+.parcel--certs     { grid-column: 7 / 13;  grid-row: 3; }
+.parcel--project   { grid-column: 1 / 7;   grid-row: 4 / 6; }
+.parcel--languages { grid-column: 7 / 13;  grid-row: 4; }
+.parcel--contact   { grid-column: 7 / 13;  grid-row: 5; }
+
+/* The four skill parcels are direct grid items via display:contents. */
+.skills-wrap { display: contents; }
+.parcel--skill { grid-row: 6; }
+.parcel--skill:nth-child(1) { grid-column: 1 / 4; }
+.parcel--skill:nth-child(2) { grid-column: 4 / 7; }
+.parcel--skill:nth-child(3) { grid-column: 7 / 10; }
+.parcel--skill:nth-child(4) { grid-column: 10 / 13; }
+
+/* The portrait parcel starts HIDDEN and is revealed only when the data has a
+   photo. The reverse — render it then hide it — collapsed 276px after first
+   paint and was this page's entire layout shift (measured: one shift, dy
+   -276px, moving Now and Bio up). An element that may not exist must never
+   occupy space before we know.
+   Identity and Now hold the full width until a portrait claims its column. */
+.parcel--portrait { display: none; }
+.parcel--identity { grid-column: 1 / 9; }
+.parcel--now      { grid-column: 9 / 13; }
+
+.sheet--has-portrait .parcel--portrait { display: block; }
+.sheet--has-portrait .parcel--identity { grid-column: 1 / 7; }
+.sheet--has-portrait .parcel--portrait { grid-column: 7 / 10; grid-row: 1; }
+.sheet--has-portrait .parcel--now      { grid-column: 10 / 13; }
+
+/* --- fills ---------------------------------------------------------------
+   A fill says what KIND of thing a card holds; it is never decoration and it
+   never encodes a level or a rating.
+
+     live   Now                                    the one currently-true fact
+     raised Graduation project                     an artifact to go and see
+     sunk   Education, Certifications, Languages   the record
+     read   Bio                                    prose, read start to finish
+     index  the four Skills                        an inventory, scanned
+     none   Identity                               the sheet's own title block
+
+   THE FOUR SKILL PARCELS ARE DELIBERATELY IDENTICAL. The moment one of them
+   differs in fill, weight or size it is claiming a proficiency level, which is
+   the banned skill rating in a new shape.
+
+   Every ink clears 4.5:1 on all three surfaces — see the token block in
+   styles.css. */
+.parcel--now       { background: var(--surface-live); }
+.parcel--project   { background: var(--surface-raised); }
+.parcel--education,
+.parcel--certs,
+.parcel--languages { background: var(--surface-sunk); }
+.parcel--bio       { background: var(--surface-read); }
+.parcel--skill     { background: var(--surface-index); }
+
+@media (max-width: 999px) {
+  .sheet-page { --pad: calc(var(--cell) * 1.5); }
+  .sheet { grid-template-columns: repeat(6, 1fr); }
+  .parcel--identity  { grid-column: 1 / 7; grid-row: 1; }
+  .parcel--now       { grid-column: 1 / 7; grid-row: 2; }
+  .sheet--has-portrait .parcel--portrait { grid-column: 1 / 3; grid-row: 2; }
+  .sheet--has-portrait .parcel--now      { grid-column: 3 / 7; grid-row: 2; }
+  .parcel--bio       { grid-column: 1 / 7; grid-row: 3; }
+  .parcel--education { grid-column: 1 / 7; grid-row: 4; }
+  .parcel--project   { grid-column: 1 / 7; grid-row: 5; }
+  .parcel--certs     { grid-column: 1 / 7; grid-row: 6; }
+  .parcel--skill     { grid-row: auto; }
+  .parcel--skill:nth-child(1) { grid-column: 1 / 4; grid-row: 7; }
+  .parcel--skill:nth-child(2) { grid-column: 4 / 7; grid-row: 7; }
+  .parcel--skill:nth-child(3) { grid-column: 1 / 4; grid-row: 8; }
+  .parcel--skill:nth-child(4) { grid-column: 4 / 7; grid-row: 8; }
+  .parcel--languages { grid-column: 1 / 7; grid-row: 9; }
+  .parcel--contact   { grid-column: 1 / 7; grid-row: 10; }
+
+}
+
+/* Full bleed on phones — a map has no margin. */
+@media (max-width: 699px) {
+  .sheet-page { --pad: var(--cell); }
+  .sheet {
+    grid-template-columns: 1fr;
+    width: 100%;
+    margin-block: 0 calc(var(--cell) * 2);
+    border-left: 0;
+  }
+  .parcel { border-right: 0; }
+  .parcel, .parcel--skill { grid-column: 1 !important; grid-row: auto !important; }
+  .parcel--portrait img { aspect-ratio: 3 / 2; }
+}
+
+/* The card label IS the h2 — a real heading, set small. CSS counters number
+   the parcels, so adding or reordering a card cannot desynchronise them and
+   no number is hardcoded in the markup. */
+/* No 01/02/03 numbering here. The cards are not a sequence, nothing
+   cross-references them and there is no index to look a number up in — the
+   numbers looked like a reference system without being one. The labels alone
+   say more. */
+
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* --- 01 identity --------------------------------------------------------- */
+.parcel--identity .eyebrow { margin: 0 0 var(--cell); }
+.parcel--identity h1 {
+  font-size: clamp(2rem, 5.5vw, 3.25rem);
+  line-height: calc(var(--cell) * 3);      /* 72px */
+  letter-spacing: -0.032em;
+  margin: 0 0 var(--cell);
+}
+/* The positioning line is NOT mint. Mint is a signal, not a brand colour. */
+.identity__role {
+  font-size: 1.25rem;
+  line-height: calc(var(--cell) * 1.5);
+  letter-spacing: -0.014em;
+  color: var(--ink-2);
+  max-width: 30ch;
+}
+
+/* --- 02 now — the only live fact on the sheet ---------------------------- */
+.parcel--now .parcel__label { color: var(--mint); }
+.now__line { display: flex; gap: calc(var(--cell) / 2); align-items: baseline; }
+.now__line > span:last-child { color: var(--ink); font-size: 1.125rem; }
+
+/* A lit signal: static halo, never pulsing. A pulse would convert a signal
+   into an attention-grab and become a reduced-motion liability. */
+.signal {
+  flex: 0 0 auto;
+  width: 10px; height: 10px;
+  background: var(--mint);
+  box-shadow: 0 0 0 5px var(--mint-glow);
+  transform: translateY(-2px);
+}
+
+/* --- 03 portrait --------------------------------------------------------- */
+.parcel--portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* --- 04 bio -------------------------------------------------------------- */
+.parcel--bio p { color: var(--ink-2); text-wrap: pretty; }
+
+/* --- fills ---------------------------------------------------------------
+   A fill says what KIND of thing a card holds; it is never decoration and it
+   never encodes a level or a rating. Three surfaces, six cards:
+
+     live   Now                 the one currently-true fact (mint = current)
+     raised Graduation project  an artifact you can go and look at
+     sunk   Academic, Contact   supporting credentials and details
+     none   Identity, Bio, Skills   reading surfaces, left as paper
+
+   Every ink clears 4.5:1 on all three — see the token block in styles.css. */
+.parcel--now      { background: var(--surface-live); }
+.parcel--project  { background: var(--surface-raised); }
+.parcel--academic { background: var(--surface-sunk); }
+.parcel--contact  { background: var(--surface-sunk); }
+
+/* --- 04 project ---------------------------------------------------------- */
+.parcel--project h3 {
+  font-size: 1.5rem;
+  line-height: calc(var(--cell) * 1.5);
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--cell);
+}
+.parcel--project p { color: var(--ink); text-wrap: pretty; }
+.parcel--project a { font-size: 1rem; }
+
+/* --- 06 academic --------------------------------------------------------- */
+.parcel--academic h3 {
+  font-size: 1.125rem;
+  line-height: calc(var(--cell) * 1.25);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.academic__where { font-size: 0.8125rem; color: var(--ink-3); margin: 0 0 var(--cell); }
+.parcel--academic .group { margin-bottom: var(--cell); }
+.parcel--academic h3.sub {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: var(--cell);
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+  margin: 0;
+}
+.muted { color: var(--ink-3); font-size: 0.9375rem; }
+
+/* Certifications are one low-emphasis line, pinned to the card's foot — which
+   also absorbs this card's row-height residual. Well-regarded engineer pages
+   list none at all; three is already generous. */
+.academic__certs {
+  margin-top: auto;
+  padding-top: var(--cell);
+  font-size: 0.75rem;
+  line-height: var(--cell);
+  color: var(--ink-3);
+  max-width: none;
+}
+
+@media (max-width: 999px) {  }
+@media (max-width: 560px) {
+      }
+
+/* --- 08 contact — languages folded in ------------------------------------ */
+.contact {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: var(--cell) var(--pad);
+  margin: 0;
+}
+.contact div { min-width: 0; }
+.contact dt {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: var(--cell);
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+}
+.contact dd { margin: 0; overflow-wrap: anywhere; }
+
+/* Revealed by about.js only when the data supplies them. ID-qualified because
+   `a.is-shown` (specificity 11) would lose to `#gradproject-link` (100). */
+#gradproject-link, #report-link { display: none; }
+#gradproject-link.is-shown, #report-link.is-shown { display: inline; }
+
+.error--sheet { width: min(var(--sheet-w), 100%); margin-inline: auto; }
+
+/* --- certifications: one row each, not a run-on line --------------------- */
+.certs { list-style: none; margin: 0; padding: 0; }
+.certs li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0 var(--cell);
+  align-items: baseline;
+  padding-block: calc(var(--cell) / 2);
+  border-top: 1px solid var(--line-soft);
+}
+.certs li:first-child { border-top: 0; padding-top: 0; }
+.cert__name  { color: var(--ink); }
+.cert__meta  { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-3);
+               font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* --- one skill parcel ---------------------------------------------------- */
+.parcel--skill ul { list-style: none; margin: 0; padding: 0; }
+.parcel--skill li { color: var(--ink-2); }
+
+/* "ML and deep learning" and "Backend and full-stack" wrap to two lines while
+   "Data" does not; without a floor the four lists start at different heights
+   and the row stops reading as one band. Two cells = two lines of mono. */
+.parcel--skill .parcel__label { min-height: calc(var(--cell) * 2); }
+
+/* --- Layout-shift reserve -------------------------------------------------
+   Every parcel renders from data/profile.json AFTER first paint, so each grid
+   row grows from zero and shoves everything below it down. On a grid the fix
+   belongs on the ROWS, not the cards: minmax() holds the lattice open at the
+   MEASURED settled height and still lets a row grow if content gets longer.
+
+   Measured in the browser (desktop 12-col / tablet 6-col / phone 1-col):
+     desktop  265 529 373 337 205
+     phone    241 169 505 165 373 258 265 265 157 121   (rows in DOM order)
+
+   RE-MEASURE whenever the card set, the grid or the profile content changes —
+   a stale reserve leaves dead space AND still shifts. */
+
+@media (max-width: 699px) {
+  /* one column: rows are implicit, so the reserve goes on the parcels */
+  .sheet { grid-template-rows: none; }
+  .parcel--identity  { min-height: 241px; }
+  .parcel--now       { min-height: 169px; }
+  .parcel--bio       { min-height: 505px; }
+  .parcel--education { min-height: 165px; }
+  .parcel--project   { min-height: 373px; }
+  .parcel--certs     { min-height: 258px; }
+  .parcel--skill     { min-height: 265px; }
+  .parcel--languages { min-height: 157px; }
+  .parcel--contact   { min-height: 121px; }
+}
