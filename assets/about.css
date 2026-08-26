@@ -79,7 +79,7 @@
      sunk   Education, Certifications, Languages   the record
      read   Bio                                    prose, read start to finish
      index  the four Skills                        an inventory, scanned
-     none   Identity                               the sheet's own title block
+     raised Identity                               the sheet's headline surface
 
    THE FOUR SKILL PARCELS ARE DELIBERATELY IDENTICAL. The moment one of them
    differs in fill, weight or size it is claiming a proficiency level, which is
@@ -92,6 +92,7 @@
 .parcel--education,
 .parcel--certs,
 .parcel--languages { background: var(--surface-sunk); }
+.parcel--identity  { background: var(--surface-raised); }
 .parcel--bio       { background: var(--surface-read); }
 .parcel--skill     { background: var(--surface-index); }
 

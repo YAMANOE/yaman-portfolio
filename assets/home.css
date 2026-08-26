@@ -35,16 +35,59 @@
 
 /* --- fills ---------------------------------------------------------------
    Same meanings as the About sheet:
-     raised  the work you can go and look at, and the contact action
+     raised  the page's headline surface, and the contact action
+     read    the carousel — work you look through
      index   the three practice areas — an inventory, scanned
      sunk    the stack — a record
      none    the hero, which is the sheet's own title block                  */
-.parcel--work  { background: var(--surface-raised); }
+.parcel--hero  { background: var(--surface-raised); }
+.parcel--work  { background: var(--surface-read); }
 .parcel--do    { background: var(--surface-index); }
 .parcel--stack { background: var(--surface-sunk); }
 .parcel--cta   { background: var(--surface-raised); }
 
-/* --- 1. Hero --- */
+/* --- 1. Hero -------------------------------------------------------------
+   Display type: tight leading, negative tracking, both scaling with size. */
+.parcel--hero .eyebrow { margin: 0 0 var(--cell); }
+
+.parcel--hero h1 {
+  font-size: clamp(2rem, 5.5vw, 3.25rem);
+  line-height: calc(var(--cell) * 2);      /* 48px */
+  letter-spacing: -0.032em;
+  max-width: 26ch;
+  /* 48px leading under a 52px face leaves almost no visual gap at one cell,
+     so the lede crowded the descenders. */
+  margin: 0 0 calc(var(--cell) * 1.5);
+  /* stops the last word stranding on its own line — "of." used to sit alone
+     under the headline */
+  text-wrap: balance;
+}
+
+.hero__lede {
+  font-size: 1.0625rem;
+  line-height: var(--cell);
+  color: var(--ink-2);
+  max-width: 58ch;
+  margin: 0 0 calc(var(--cell) * 1.5) !important;
+  text-wrap: pretty;
+}
+
+.hero__actions {
+  display: flex; flex-wrap: wrap;
+  gap: calc(var(--cell) / 2);
+  margin: 0 !important;
+}
+
+.cta__line {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 600;
+  line-height: calc(var(--cell) * 1.5);
+  letter-spacing: -0.022em;
+  max-width: 20ch;
+  margin: 0 0 var(--cell);
+}
+
 /* --- 2. Selected work / coverflow --- */
 
 .cf {
@@ -148,4 +191,21 @@
   .cf { height: 240px; }
   .cf__card { width: 180px; height: 180px; margin: -90px 0 0 -90px; }
   .cap__row dt { flex-basis: 100%; }
+}
+
+/* The one concrete example, set apart from the lede without shouting. A mint
+   rule on the inline edge, the label in mono above the sentence. */
+.hero__proof {
+  border-inline-start: 2px solid var(--mint);
+  padding-inline-start: var(--cell);
+  max-width: 56ch;
+  color: var(--ink-2);
+  margin: 0 0 calc(var(--cell) * 1.5) !important;
+}
+.hero__proof-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
 }

@@ -51,15 +51,22 @@
 
   <div class="sheet">
 
-    <!-- 1. Hero -->
+    <!-- 1. Hero — the sheet's headline surface. The proof line is the most
+         characteristic thing in the work: a failure that was silent until it
+         was gated. Wording traces to the traffic case study, not invented. -->
     <section class="parcel parcel--hero" aria-labelledby="hero-h">
       <p class="eyebrow">AI/ML Engineer · Amman, Jordan</p>
-      <h1 id="hero-h">I build the layer machine-learning systems run on top of.</h1>
+      <h1 id="hero-h">I build the layer machine-learning runs on.</h1>
       <p class="hero__lede">
-        Data schemas, services and the verification around them — for a city-scale traffic
-        platform, a national citizen-feedback system and a crisis decision-support service.
-        Most of what I do is making failure loud: an import that exits zero while writing
-        nothing is worse than one that stops the pipeline.
+        Schemas, services and the invariants that make a silent failure impossible — on a
+        city-scale traffic platform, a national citizen-feedback system and a crisis
+        decision-support service.
+      </p>
+      <p class="hero__proof">
+        <span class="hero__proof-label">The work, in one example</span>
+        An import that failed every insert while exiting zero. I gated it on a ratio
+        invariant, which then caught two silent-truncation bugs in the importer that
+        replaced it.
       </p>
       <p class="hero__actions">
         <a class="btn btn--primary" href="projects.html">See the work</a>
