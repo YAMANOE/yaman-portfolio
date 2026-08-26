@@ -81,8 +81,11 @@
   --font-mono:    "JetBrains Mono", "Mono fallback", ui-monospace, "SF Mono", monospace;
 
   /* --- measure ------------------------------------------------------------ */
-  --shell:        72rem;          /* 1152px = 12 arterials, so page content
-                                     lands on the same lines the grid draws */
+  /* --shell is ALWAYS 12 arterials — every parcel spans whole columns, so a
+     card edge can only land on an arterial line if one column IS one arterial.
+     To widen the sheet you scale the arterial, not the shell alone; see the
+     breakpoints below. Valid steps: 96/1152, 120/1440, 144/1728. */
+  --shell:        calc(var(--arterial) * 12);
   --gutter:       1.5rem;
   --radius:       0.5rem;
 
@@ -91,7 +94,7 @@
      fourth line, side streets between — so the grid is a measurement system
      rather than wallpaper. Every page shares it. */
   --cell:         24px;
-  --arterial:     calc(var(--cell) * 4);   /* 96px */
+  --arterial:     calc(var(--cell) * 4);   /* 96px — one column */
 
   /* --- card surfaces -------------------------------------------------------
      A fill is a statement about WHAT a card holds, never decoration:
@@ -108,6 +111,13 @@
   --surface-read:   #F2F4F3;   /* prose you read start to finish       */
   --surface-index:  #E9ECE8;   /* an inventory you scan, never read    */
 }
+
+/* On a wide screen a 1152px sheet is an island in bare grid. Step the arterial
+   up a whole cell at a time so the sheet grows to fill the space AND every card
+   edge still lands on a drawn line. The fine 24px grid never changes, so the
+   page keeps the same texture at every width. */
+@media (min-width: 1500px) { :root { --arterial: calc(var(--cell) * 5); } }  /* 120 -> 1440 */
+@media (min-width: 1800px) { :root { --arterial: calc(var(--cell) * 6); } }  /* 144 -> 1728 */
 
 /* ==========================================================================
    Reset — only what the shell actually needs.

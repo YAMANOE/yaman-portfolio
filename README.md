@@ -61,6 +61,20 @@ step, and Phase 0 forbids linking a page that does not exist yet. So when a
 phase adds a page, it must add that nav link to *every* page already shipped.
 Expect it; it is not a mistake in the file you are looking at.
 
+**The sheet widens by stepping the arterial, never the shell alone.**
+`--shell` is *always* 12 arterials, because every parcel spans whole columns
+and a card edge can only land on a drawn line if one column IS one arterial.
+So the valid widths are a ladder, and anything between them breaks alignment:
+
+| viewport | arterial | shell |
+|---|---|---|
+| < 1500px | 96px (4 cells) | 1152px |
+| ≥ 1500px | 120px (5 cells) | 1440px |
+| ≥ 1800px | 144px (6 cells) | 1728px |
+
+The fine 24px grid never changes, so the page keeps one texture at every width.
+Prose stays readable because paragraphs are capped at 64ch regardless.
+
 **One grid, one shell, every page.** `--cell` (24px) and `--arterial` (96px)
 are site-wide tokens; the background draws arterials in `--line` and side
 streets in `--line-soft`, and `--shell` is 1152px — exactly 12 arterials — so

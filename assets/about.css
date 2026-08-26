@@ -301,6 +301,40 @@
    RE-MEASURE whenever the card set, the grid or the profile content changes —
    a stale reserve leaves dead space AND still shifts. */
 
+
+/* --- Layout-shift reserve -------------------------------------------------
+   Every parcel renders from data/profile.json AFTER first paint, so each row
+   grows from zero and pushes everything below it down. On a grid the reserve
+   belongs on the ROWS: minmax() holds the lattice open at the measured settled
+   height and still lets a row grow if the content gets longer.
+
+   MEASURED settled rows (identity/now · bio+education · certs · project+
+   languages · contact · skills):
+     shell 1152   265  229  300  205  169  337
+     shell 1440   265  213  284  205  169  313
+     shell 1728   265  213  284  205  169  313
+
+   The 1440 and 1728 rows are identical because the prose is capped at 64ch and
+   stops rewrapping past that width. The mobile branch below reserves the
+   parcels instead, since a one-column lattice has implicit rows.
+
+   RE-MEASURE whenever the card set, the grid or the profile content changes —
+   a stale reserve leaves dead space AND still shifts. This is the standing cost
+   of rendering content at runtime with no build step. */
+.sheet {
+  grid-template-rows:
+    minmax(265px, auto) minmax(229px, auto) minmax(300px, auto)
+    minmax(205px, auto) minmax(169px, auto) minmax(337px, auto);
+}
+
+@media (min-width: 1500px) {
+  .sheet {
+    grid-template-rows:
+      minmax(265px, auto) minmax(213px, auto) minmax(284px, auto)
+      minmax(205px, auto) minmax(169px, auto) minmax(313px, auto);
+  }
+}
+
 @media (max-width: 699px) {
   /* one column: rows are implicit, so the reserve goes on the parcels */
   .sheet { grid-template-rows: none; }

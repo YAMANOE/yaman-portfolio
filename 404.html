@@ -28,7 +28,8 @@
     --ink: #14161A; --ink-2: #4A4F57; --ink-3: #565C66;
     --mint: #0B6B53; --mint-glow: #D6F5EA;
     --line: #D2CFC7; --line-soft: #E4E2DB;
-    --shell: 72rem; --gutter: 1.5rem; --radius: 0.5rem; --cell: 24px; --arterial: 96px;
+    --gutter: 1.5rem; --radius: 0.5rem; --cell: 24px; --arterial: calc(var(--cell) * 4);
+    --shell: calc(var(--arterial) * 12);
   }
   *, *::before, *::after { box-sizing: border-box; }
   body {
@@ -73,6 +74,9 @@
                         padding-block: 1.5rem; font-size: 0.8125rem; color: var(--ink-2);
                         font-family: "JetBrains Mono", ui-monospace, monospace; }
   a { color: var(--mint); }
+  /* matches the steps in styles.css — see the note there */
+  @media (min-width: 1500px) { :root { --arterial: calc(var(--cell) * 5); } }
+  @media (min-width: 1800px) { :root { --arterial: calc(var(--cell) * 6); } }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   }
