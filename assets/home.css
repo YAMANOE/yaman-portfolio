@@ -211,11 +211,11 @@
 }
 
 /* --- wide screens: shape the hero's void, do not leave it -----------------
-   At 1440px+ the hero card is wide enough that a single 58ch text column
+   At the 1440 step the hero card is wide enough that a single 58ch text column
    leaves half the card as leftover space. Swiss asymmetry only reads as
    deliberate when the grid shapes the emptiness, so above the step the lede
    and the proof line sit side by side and the void closes. */
-@media (min-width: 1500px) {
+@media (min-width: 1680px) {
   .parcel--hero {
     display: grid;
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);

@@ -115,9 +115,15 @@
 /* On a wide screen a 1152px sheet is an island in bare grid. Step the arterial
    up a whole cell at a time so the sheet grows to fill the space AND every card
    edge still lands on a drawn line. The fine 24px grid never changes, so the
-   page keeps the same texture at every width. */
-@media (min-width: 1500px) { :root { --arterial: calc(var(--cell) * 5); } }  /* 120 -> 1440 */
-@media (min-width: 1800px) { :root { --arterial: calc(var(--cell) * 6); } }  /* 144 -> 1728 */
+   page keeps the same texture at every width.
+
+   A step only fires once the wider sheet can still sit inside at least one
+   arterial of clear grid on each side: the step fires at shell + 2 arterials
+   exactly. Stepping at 1500/1800 left just 30px and 36px of margin, so the
+   sheet almost touched the window edge — it has to read as a sheet ON the grid,
+   not as the page itself. */
+@media (min-width: 1680px) { :root { --arterial: calc(var(--cell) * 5); } }  /* 1440 + 120 each side */
+@media (min-width: 2016px) { :root { --arterial: calc(var(--cell) * 6); } }  /* 1728 + 144 each side */
 
 /* ==========================================================================
    Reset — only what the shell actually needs.

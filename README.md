@@ -66,11 +66,16 @@ Expect it; it is not a mistake in the file you are looking at.
 and a card edge can only land on a drawn line if one column IS one arterial.
 So the valid widths are a ladder, and anything between them breaks alignment:
 
-| viewport | arterial | shell |
-|---|---|---|
-| < 1500px | 96px (4 cells) | 1152px |
-| ≥ 1500px | 120px (5 cells) | 1440px |
-| ≥ 1800px | 144px (6 cells) | 1728px |
+| viewport | arterial | shell | margin each side |
+|---|---|---|---|
+| < 1680px | 96px (4 cells) | 1152px | ≥ 96px |
+| ≥ 1680px | 120px (5 cells) | 1440px | ≥ 120px |
+| ≥ 2016px | 144px (6 cells) | 1728px | ≥ 144px |
+
+**Each step fires at `shell + 2 arterials`, never earlier.** The first attempt
+stepped at 1500/1800, which left only 30px and 36px of margin — the sheet
+almost touched the window edge and read as the page itself rather than as a
+sheet sitting on the grid.
 
 The fine 24px grid never changes, so the page keeps one texture at every width.
 Prose stays readable because paragraphs are capped at 64ch regardless.

@@ -327,7 +327,7 @@
     minmax(205px, auto) minmax(169px, auto) minmax(337px, auto);
 }
 
-@media (min-width: 1500px) {
+@media (min-width: 1680px) {
   .sheet {
     grid-template-rows:
       minmax(265px, auto) minmax(213px, auto) minmax(284px, auto)
