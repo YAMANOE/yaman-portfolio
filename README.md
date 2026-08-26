@@ -118,7 +118,14 @@ card) live in `assets/styles.css` and are used by the home page, the projects
 index, the About page and the case studies. Each page's own stylesheet supplies
 only placement and fills. A page opts in with `class="sheet-page"` on `<body>`.
 
-**Two grid traps, both of which cost a Lighthouse run to find:**
+**Never give `.parcel` a background in `styles.css`.** The shared `.sheet` /
+`.parcel` block is the last thing in that file, so any background it declares
+beats every page fill written above it on equal specificity — including
+`transparent`, which paints nothing yet still wins. That one no-op declaration
+silently stripped the fill from the project cards once and from the filter bar
+twice. A parcel's fill is always set by the page that owns it.
+
+**Three grid traps, all of which cost a Lighthouse run or a screenshot to find:**
 - `min-height` on a grid container **stretches its rows** to fill the reserve.
   `.sheet` sets `align-content: start` so extra height sits at the bottom of the
   lattice instead of inflating the first row and collapsing when content lands.

@@ -376,7 +376,9 @@ main { display: block; flex: 1; }
    Phase 2 — projects index. The cards are parcels in the shared sheet.
    ========================================================================== */
 
-.parcel--head    { grid-column: 1 / 13; grid-row: 1; }
+/* Same fill meanings as every other sheet: the head is this page's headline
+   surface, the filter bar is a control rather than content. */
+.parcel--head    { grid-column: 1 / 13; grid-row: 1; background: var(--surface-raised); }
 .parcel--filters { grid-column: 1 / 13; grid-row: 2; background: var(--surface-sunk); }
 
 .parcel--head h1 {
@@ -608,6 +610,11 @@ a.parcel.card:hover { background: var(--surface-raised); }
 
    The container supplies the top and left hairline, each parcel supplies its
    right and bottom, so every interior edge is exactly 1px and never doubled.
+
+   DO NOT give .parcel a background here. This block is the LAST thing in this
+   file, so any background it declares beats every page fill written above it on
+   equal specificity — even `transparent`, which paints nothing but still wins.
+   A parcel's fill is always set by the page that owns it.
    ========================================================================== */
 
 .sheet-page { --pad: calc(var(--cell) * 2); }        /* 48px parcel padding */
@@ -637,7 +644,6 @@ a.parcel.card:hover { background: var(--surface-raised); }
   margin: 0;
   min-width: 0;                 /* the 360px overflow guard */
   align-content: start;
-  background: transparent;
   display: flex;
   flex-direction: column;
 }
