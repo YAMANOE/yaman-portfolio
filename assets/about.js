@@ -8,6 +8,7 @@
  */
 
 import { load } from './store.js';
+import { icon } from './icons.js';
 
 const DATA = 'data/profile.json';
 const DRAFT_KEY = 'yaman-portfolio:profile';
@@ -33,22 +34,33 @@ function setOrHide(id, value, container) {
   return true;
 }
 
-/** One <dt>/<dd> pair. Rows with no real href are NOT rendered at all — three
- *  "not published yet" blanks on a sheet read as unfinished to an admissions
- *  reader. Ship the rows that resolve; the TODO stays in profile.json. */
-function pair(term, value, href) {
+/** One <dt>/<dd> pair. Rows with no real href are NOT rendered at all — blanks
+ *  on a sheet read as unfinished to an admissions reader. Ship the rows that
+ *  resolve; the TODO stays in profile.json.
+ *
+ *  `iconName` is optional: the mark sits in the <dt> beside the label, and is
+ *  aria-hidden because the label already says what it is. */
+function pair(term, value, href, iconName) {
   const wrap = document.createElement('div');
+
   const dt = document.createElement('dt');
-  dt.textContent = term;
+  const mark = iconName ? icon(iconName) : null;
+  if (mark) dt.append(mark);
+  dt.append(document.createTextNode(term));
+  if (mark) dt.classList.add('has-icon');
+
   const dd = document.createElement('dd');
   if (href) {
     const a = document.createElement('a');
     a.href = href;
     a.textContent = value;
+    // an external profile opens where the reader expects it to
+    if (/^https?:/.test(href)) { a.rel = 'me noopener'; }
     dd.append(a);
   } else {
     dd.textContent = value;
   }
+
   wrap.append(dt, dd);
   return wrap;
 }
@@ -147,7 +159,8 @@ try {
 
   // Rows with no real href are not rendered — see pair() above.
   el('contact').replaceChildren(
-    ...p.contact.filter(c => !isMissing(c.href)).map(c => pair(c.label, c.value, c.href)));
+    ...p.contact.filter(c => !isMissing(c.href))
+                .map(c => pair(c.label, c.value, c.href, c.icon)));
 } catch (err) {
   const box = el('error');
   box.hidden = false;

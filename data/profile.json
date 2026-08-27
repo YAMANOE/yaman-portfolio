@@ -104,21 +104,25 @@
   "contact": [
     {
       "label": "Email",
-      "value": "TODO(yaman): the address you want published",
-      "href": ""
+      "icon": "email",
+      "value": "yamanobiedat5@gmail.com",
+      "href": "mailto:yamanobiedat5@gmail.com"
     },
     {
       "label": "LinkedIn",
-      "value": "TODO(yaman): profile URL",
-      "href": ""
+      "icon": "linkedin",
+      "value": "linkedin.com/in/yaman-obiedat",
+      "href": "https://www.linkedin.com/in/yaman-obiedat"
     },
     {
       "label": "GitHub",
+      "icon": "github",
       "value": "github.com/YAMANOE",
       "href": "https://github.com/YAMANOE"
     },
     {
       "label": "CV",
+      "icon": "document",
       "value": "TODO(yaman): add the PDF",
       "href": ""
     }
